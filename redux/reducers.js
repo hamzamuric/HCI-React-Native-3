@@ -1,15 +1,4 @@
-/*
-    todos: [
-        { id: 1, title: 'todo1', done: false },
-        { id: 2, title: 'todo2', done: true },
-        { id: 3, title: 'todo3', done: false },
-    ]
-*/
-
-// dispatch({ type: 'ADD_TODO', todo: todo })
-// dispatch({ type: 'EDIT_TODO', todo: todo })
-// dispatch({ type: 'REMOVE_TODO', id: id })
-import {ADD_TODO, REMOVE_TODO, EDIT_TODO} from './actions'
+import { ADD_TODO, REMOVE_TODO, EDIT_TODO, TOGGLE_TODO, SET_TODOS } from './actions'
 
 export function todosReducer(state = [], action) {
     switch (action.type) {
@@ -19,6 +8,10 @@ export function todosReducer(state = [], action) {
             return state.filter(todo => todo.id !== action.id)
         case EDIT_TODO:
             return state.map(todo => todo.id === action.todo.id ? action.todo : todo)
+        case TOGGLE_TODO:
+            return state.map(todo => todo.id === action.id ? {...todo, done: !todo.done} : todo)
+        case SET_TODOS:
+            return action.todos
         default:
             return state
     }

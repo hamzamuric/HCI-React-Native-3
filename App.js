@@ -1,15 +1,15 @@
 import { todosReducer } from './redux/reducers';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import Todos from './Todos';
+import thunk from 'redux-thunk';
+import { getTodos } from './redux/actions';
 
-const initialState = [
-  { id: 1, title: 'todo1', done: false },
-  { id: 2, title: 'todo2', done: true },
-  { id: 3, title: 'todo3', done: false },
-]
+const initialState = []
 
-const store = createStore(todosReducer, initialState)
+const store = createStore(todosReducer, initialState, applyMiddleware(thunk))
+
+store.dispatch(getTodos())
 
 export default function App() {
   return (
